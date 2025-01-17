@@ -1,14 +1,16 @@
+const API_BASE_URL = 'https://triple-a-fc.vercel.app/api';
+
 export const initializeRazorpay = async (orderData) => {
   const options = {
-    key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+    key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_test_GEZQfBnCrf1uyR',
     amount: orderData.amount,
     currency: orderData.currency,
     name: "Triple A FC",
     description: "Fitness Program Payment",
-    order_id: orderData.orderId,
+    order_id: orderData.id,
     handler: async function (response) {
       try {
-        const verificationResponse = await fetch('/api/razorpay/verify-payment', {
+        const verificationResponse = await fetch(`${API_BASE_URL}/razorpay/verify-payment`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { initializeRazorpay } from '../utils/payment';
 
+const API_BASE_URL = 'https://triple-a-fc.vercel.app/api';
+
 export default function PaymentButton({ amount }) {
   const [loading, setLoading] = useState(false);
 
@@ -8,7 +10,7 @@ export default function PaymentButton({ amount }) {
     setLoading(true);
     try {
       // Create order
-      const response = await fetch('/api/razorpay/create-order', {
+      const response = await fetch(`${API_BASE_URL}/razorpay/create-order`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -10,9 +10,10 @@ const razorpay = new Razorpay({
 
 // Initialize CORS middleware
 const corsMiddleware = cors({
-  origin: ['http://localhost:5173', 'https://triple-a-fitness.vercel.app'],
+  origin: '*',  // Allow all origins for now
   methods: ['POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type']
+  allowedHeaders: ['Content-Type', 'x-razorpay-signature'],
+  credentials: true
 });
 
 // Wrapper for CORS middleware

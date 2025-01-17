@@ -1,15 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import cors from 'cors';
 import crypto from 'crypto';
-import { logger } from '../../../utils/logger';
 
 const corsMiddleware = cors({
   origin: [
     'http://localhost:3000',
-    'https://triple-a-fc.vercel.app'
+    'https://triple-a-fc.vercel.app',
+    'https://triple-a-fc-git-main-super-mogger.vercel.app'
   ],
   methods: ['POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type']
+  allowedHeaders: ['Content-Type', 'x-razorpay-signature'],
+  credentials: true
 });
 
 function runMiddleware(req: NextApiRequest, res: NextApiResponse, fn: Function) {
@@ -51,20 +52,20 @@ export default async function handler(
       .digest('hex');
 
     if (expectedSignature === razorpay_signature) {
-      logger.info('Payment verified successfully', { payment_id: razorpay_payment_id });
+      console.log('Payment verified successfully:', razorpay_payment_id);
       return res.status(200).json({
         status: 'success',
         payment_id: razorpay_payment_id
       });
     } else {
-      logger.error('Payment signature verification failed');
+      console.log('Payment signature verification failed');
       return res.status(400).json({
         status: 'failure',
         message: 'Invalid signature'
       });
     }
   } catch (error) {
-    logger.error('Error in verify-payment', error);
+    console.error('Error verifying payment:', error);
     res.status(500).json({
       status: 'error',
       message: error instanceof Error ? error.message : 'Unknown error'
