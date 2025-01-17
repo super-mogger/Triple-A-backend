@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { initializeRazorpay } from '../utils/payment';
 
-const API_BASE_URL = 'https://triple-a-fc.vercel.app/api';
+const API_BASE_URL = 'https://triple-a-backend-2.vercel.app/api';
 
 export default function PaymentButton({ amount }) {
   const [loading, setLoading] = useState(false);
@@ -19,6 +19,7 @@ export default function PaymentButton({ amount }) {
           amount: amount,
           currency: 'INR'
         }),
+        credentials: 'include'
       });
 
       if (!response.ok) {
@@ -26,8 +27,6 @@ export default function PaymentButton({ amount }) {
       }
 
       const orderData = await response.json();
-      
-      // Initialize Razorpay
       await initializeRazorpay(orderData);
     } catch (error) {
       console.error('Payment error:', error);

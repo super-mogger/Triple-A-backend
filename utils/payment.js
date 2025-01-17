@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://triple-a-fc.vercel.app/api';
+const API_BASE_URL = 'https://triple-a-backend-2.vercel.app/api';
 
 export const initializeRazorpay = async (orderData) => {
   const options = {
@@ -20,6 +20,7 @@ export const initializeRazorpay = async (orderData) => {
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
           }),
+          credentials: 'include'
         });
 
         const data = await verificationResponse.json();

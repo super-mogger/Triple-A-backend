@@ -13,7 +13,8 @@ const corsMiddleware = cors({
   origin: [
     'http://localhost:3000',
     'https://triple-a-fc.vercel.app',
-    'https://triple-a-fc-git-main-super-mogger.vercel.app'
+    'https://triple-a-fc-git-main-super-mogger.vercel.app',
+    'https://triple-a-backend-2.vercel.app'
   ],
   methods: ['POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'x-razorpay-signature'],
