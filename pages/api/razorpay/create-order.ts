@@ -20,8 +20,12 @@ const corsMiddleware = cors({
   credentials: true
 });
 
-// Wrapper for CORS middleware
-function runMiddleware(req: NextApiRequest, res: NextApiResponse, fn: Function) {
+// Middleware runner
+const runMiddleware = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  fn: typeof corsMiddleware
+) => {
   return new Promise((resolve, reject) => {
     fn(req, res, (result: any) => {
       if (result instanceof Error) {
@@ -30,7 +34,7 @@ function runMiddleware(req: NextApiRequest, res: NextApiResponse, fn: Function) 
       return resolve(result);
     });
   });
-}
+};
 
 export default async function handler(
   req: NextApiRequest,

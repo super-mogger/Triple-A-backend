@@ -2,22 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "pages/api/**/*.ts",
-      "use": "@vercel/node"
+      "src": "next.config.js",
+      "use": "@vercel/next"
     }
   ],
   "routes": [
     {
-      "src": "/api/razorpay/create-order",
-      "dest": "/pages/api/razorpay/create-order.ts"
-    },
-    {
-      "src": "/api/razorpay/verify-payment",
-      "dest": "/pages/api/razorpay/verify-payment.ts"
-    },
-    {
-      "src": "/api/razorpay/webhook",
-      "dest": "/pages/api/razorpay/webhook.ts"
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
     }
   ]
 } 
