@@ -16,11 +16,18 @@ app.get('/api/test', (req, res) => {
   res.json({ message: 'Backend is working!' });
 });
 
-// Vercel serverless function handler
+// Handle root route
+app.get('/', (req, res) => {
+  res.json({ message: 'Triple-A FC Backend API' });
+});
+
+// For local development
 if (process.env.NODE_ENV !== 'production') {
-  app.listen(3001, () => {
-    console.log('Server running on port 3001');
+  const PORT = process.env.PORT || 3001;
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
   });
 }
 
+// Export for Vercel
 module.exports = app; 
