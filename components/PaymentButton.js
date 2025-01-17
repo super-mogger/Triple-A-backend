@@ -7,8 +7,8 @@ export default function PaymentButton({ amount }) {
   const handlePayment = async () => {
     setLoading(true);
     try {
-      // Create order on backend
-      const response = await fetch('https://your-backend-url/api/create-order', {
+      // Create order
+      const response = await fetch('/api/razorpay/create-order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -18,6 +18,10 @@ export default function PaymentButton({ amount }) {
           currency: 'INR'
         }),
       });
+
+      if (!response.ok) {
+        throw new Error('Failed to create order');
+      }
 
       const orderData = await response.json();
       

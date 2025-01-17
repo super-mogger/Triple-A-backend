@@ -1,14 +1,14 @@
 export const initializeRazorpay = async (orderData) => {
   const options = {
-    key: "rzp_test_GEZQfBnCrf1uyR", // Enter the Key ID from README
+    key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
     amount: orderData.amount,
     currency: orderData.currency,
     name: "Triple A FC",
     description: "Fitness Program Payment",
-    order_id: orderData.id,
+    order_id: orderData.orderId,
     handler: async function (response) {
       try {
-        const verificationResponse = await fetch('/api/verify-payment', {
+        const verificationResponse = await fetch('/api/razorpay/verify-payment', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -23,8 +23,10 @@ export const initializeRazorpay = async (orderData) => {
         const data = await verificationResponse.json();
         
         if (data.status === 'success') {
-          // Payment successful - update UI accordingly
           alert('Payment successful!');
+          // Add any success handling here
+        } else {
+          throw new Error(data.message || 'Payment verification failed');
         }
       } catch (err) {
         console.error(err);
